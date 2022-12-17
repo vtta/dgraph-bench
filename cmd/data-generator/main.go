@@ -24,6 +24,7 @@ var (
 )
 
 func main() {
+	r := rand.New(rand.NewSource(99))
 	flag.Parse()
 	f, err := os.OpenFile(*output, os.O_WRONLY|os.O_CREATE, 0755)
 	if err != nil {
@@ -34,7 +35,7 @@ func main() {
 	for i := 1; i <= maxUid; i++ {
 		meID := fmt.Sprintf("_:m.%d", i)
 		writeNQuad(w, meID, "xid", fmt.Sprintf("\"%d\"", i))
-		writeNQuad(w, meID, "name", fmt.Sprintf("\"%s\"", tasks.RandString(10)))
+		writeNQuad(w, meID, "name", fmt.Sprintf("\"%s\"", tasks.RandString(10, r)))
 		writeNQuad(w, meID, "age", fmt.Sprintf("\"%d\"", 18+rand.Intn(80)))
 		writeNQuad(w, meID, "created_at", fmt.Sprintf("\"%d\"", time.Now().UnixNano()))
 		writeNQuad(w, meID, "updated_at", fmt.Sprintf("\"%d\"", time.Now().UnixNano()))
